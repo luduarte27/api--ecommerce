@@ -18,10 +18,20 @@ public class Endereco {
 
     private String bairro;
 
+    private Integer numero;
+
     private String Complemento;
 
     public String getCidade() {
         return cidade;
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 
     public void setCidade(String cidade) {
