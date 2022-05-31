@@ -3,8 +3,10 @@ package com.ecommerce.ecommerce.view.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ecommerce.ecommerce.model.Endereco;
 import com.ecommerce.ecommerce.services.ClienteService;
 import com.ecommerce.ecommerce.shared.ClienteDTO;
+import com.ecommerce.ecommerce.util.ViaCepWs;
 import com.ecommerce.ecommerce.view.model.cliente.ClienteRequest;
 import com.ecommerce.ecommerce.view.model.cliente.ClienteResponse;
 import com.ecommerce.ecommerce.view.model.produto.ProdutoResponse;
@@ -28,11 +30,13 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
+    @Autowired
+    private  ViaCepWs viaCep;
+
     @GetMapping
     public ResponseEntity<List<ClienteResponse>> obterTodos(){
         
         List<ClienteDTO> clientes = clienteService.obterTodos();
-
         List<ClienteResponse> response = clientes.stream()
         .map(cliente -> new ModelMapper().map(cliente, ClienteResponse.class))
         .collect(Collectors.toList());
@@ -40,19 +44,30 @@ public class ClienteController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    // @PostMapping
-    // public ResponseEntity<ClienteResponse> adicionar(@RequestBody ClienteRequest clienteReq){
+    @PostMapping
+    public ResponseEntity<ClienteResponse> adicionar(@RequestBody ClienteRequest clienteReq){
         
-    //     ModelMapper mapper = new ModelMapper();
+        ModelMapper mapper = new ModelMapper();
 
-        
+        Endereco endereco = this.viaCep.consultarCep(clienteReq.getCep());
 
-        // ClienteDTO clienteDTO = mapper.map(clienteReq, ProdutoDTO.class);
+        endereco.setComplemento(clienteReq.getComplemento());
+        endereco.setNumero(clienteReq.getNumero());
 
-        // produtoDTO = produtoService.adicionar(produtoDTO);
+        ClienteDTO clienteDTO = new ClienteDTO();
 
-        // return new ResponseEntity<>(mapper.map(ClienteDTO, ProdutoResponse.class), HttpStatus.CREATED);
-    // }
+        clienteDTO.setNome(clienteReq.getNome());
+        clienteDTO.setCpf(clienteReq.getCpf());
+        clienteDTO.setEmail(clienteReq.getEmail());
+        clienteDTO.setDataDeNascimento(clienteReq.getDataDeNascimento());
+        clienteDTO.setEndereco(endereco);
+
+
+
+        clienteDTO = clienteService.adicionar(clienteDTO);
+
+        return new ResponseEntity<>(mapper.map(clienteDTO, ClienteResponse.class), HttpStatus.CREATED);
+    }
 
     @DeleteMapping
     public ResponseEntity<?> deletar(@PathVariable Integer id){

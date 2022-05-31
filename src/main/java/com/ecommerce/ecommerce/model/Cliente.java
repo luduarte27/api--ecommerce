@@ -2,6 +2,7 @@ package com.ecommerce.ecommerce.model;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +24,7 @@ public class Cliente {
 
     private Date dataDeNascimento;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.PERSIST)
     private Endereco endereco;
 
     public Integer getId() {

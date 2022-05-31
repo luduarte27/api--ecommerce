@@ -14,17 +14,15 @@ public class Endereco {
 
     private String logradouro;
 
-    private String cidade;
+    private String cep;
+
+    private String localidade;
 
     private String bairro;
 
     private Integer numero;
 
     private String Complemento;
-
-    public String getCidade() {
-        return cidade;
-    }
 
     public Integer getNumero() {
         return numero;
@@ -34,9 +32,6 @@ public class Endereco {
         this.numero = numero;
     }
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
 
     public String getBairro() {
         return bairro;
@@ -68,6 +63,22 @@ public class Endereco {
 
     public void setLogradouro(String logradouro) {
         this.logradouro = logradouro;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getLocalidade() {
+        return localidade;
+    }
+
+    public void setLocalidade(String localidade) {
+        this.localidade = localidade;
     }
 
 }
