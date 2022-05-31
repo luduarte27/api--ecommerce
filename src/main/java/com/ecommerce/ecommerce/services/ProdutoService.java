@@ -28,6 +28,19 @@ public class ProdutoService {
         .collect(Collectors.toList());
     }
 
+    public Optional<ProdutoDTO> obterPorId(Integer id){
+
+        Optional<Produto> produto = produtoRepository.findById(id);
+
+        if(produto.isEmpty()){
+            throw new ResourceNotFoundException("Produto com id " + id + " não encontrado.");
+        }
+
+        ProdutoDTO dto = new ModelMapper().map(produto.get(), ProdutoDTO.class);
+
+        return Optional.of(dto);
+    }
+
     public ProdutoDTO adicionar(ProdutoDTO produtoDTO) {
         produtoDTO.setId(null);
 

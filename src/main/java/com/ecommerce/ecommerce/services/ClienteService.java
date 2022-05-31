@@ -27,6 +27,19 @@ public class ClienteService {
         .collect(Collectors.toList());
     }
 
+    public Optional<ClienteDTO> obterPorId(Integer id){
+
+        Optional<Cliente> cliente = clienteRepository.findById(id);
+
+        if(cliente.isEmpty()){
+            throw new ResourceNotFoundException("Cliente com id " + id + " não encontrado.");
+        }
+
+        ClienteDTO dto = new ModelMapper().map(cliente.get(), ClienteDTO.class);
+
+        return Optional.of(dto);
+    }
+
     public ClienteDTO adicionar(ClienteDTO clienteDTO){
         clienteDTO.setId(null);
 

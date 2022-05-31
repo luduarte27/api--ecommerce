@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.view.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.ecommerce.ecommerce.services.ProdutoService;
@@ -38,6 +39,16 @@ public class ProdutoController {
         .collect(Collectors.toList());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<ProdutoResponse>> obterPorId(@PathVariable Integer id){
+        Optional<ProdutoDTO> dto =  produtoService.obterPorId(id);
+
+        ProdutoResponse produto = new ModelMapper().map(dto.get(), ProdutoResponse.class);
+        
+        return new ResponseEntity<>(Optional.of(produto), HttpStatus.OK);
+
     }
 
     @PostMapping

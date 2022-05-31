@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.view.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.ecommerce.ecommerce.model.Endereco;
@@ -9,7 +10,6 @@ import com.ecommerce.ecommerce.shared.ClienteDTO;
 import com.ecommerce.ecommerce.util.ViaCepWs;
 import com.ecommerce.ecommerce.view.model.cliente.ClienteRequest;
 import com.ecommerce.ecommerce.view.model.cliente.ClienteResponse;
-import com.ecommerce.ecommerce.view.model.produto.ProdutoResponse;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +42,16 @@ public class ClienteController {
         .collect(Collectors.toList());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<ClienteResponse>> obterPorId(@PathVariable Integer id){
+        Optional<ClienteDTO> dto =  clienteService.obterPorId(id);
+
+        ClienteResponse cliente = new ModelMapper().map(dto.get(), ClienteResponse.class);
+        
+        return new ResponseEntity<>(Optional.of(cliente), HttpStatus.OK);
+
     }
 
     @PostMapping

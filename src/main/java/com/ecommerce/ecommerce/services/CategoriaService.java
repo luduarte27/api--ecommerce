@@ -28,6 +28,19 @@ public class CategoriaService {
         .collect(Collectors.toList());
     }
 
+    public Optional<CategoriaDTO> obterPorId(Integer id){
+
+        Optional<Categoria> categoria = categoriaRepository.findById(id);
+
+        if(categoria.isEmpty()){
+            throw new ResourceNotFoundException("Categoria com id " + id + " não encontrado.");
+        }
+
+        CategoriaDTO dto = new ModelMapper().map(categoria.get(), CategoriaDTO.class);
+
+        return Optional.of(dto);
+    }
+
     public CategoriaDTO adicionar(CategoriaDTO categoriaDTO){
         categoriaDTO.setId(null);
 

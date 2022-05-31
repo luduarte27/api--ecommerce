@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.ecommerce.ecommerce.services.CategoriaService;
@@ -38,6 +39,16 @@ public class CategoriaController {
         .collect(Collectors.toList());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<CategoriaResponse>> obterPorId(@PathVariable Integer id){
+        Optional<CategoriaDTO> dto =  categoriaService.obterPorId(id);
+
+        CategoriaResponse categoria = new ModelMapper().map(dto.get(), CategoriaResponse.class);
+        
+        return new ResponseEntity<>(Optional.of(categoria), HttpStatus.OK);
+
     }
 
     @PostMapping
