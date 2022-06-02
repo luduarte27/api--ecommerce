@@ -5,9 +5,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.ecommerce.ecommerce.model.Cliente;
+import com.ecommerce.ecommerce.model.exception.InvalidCpfException;
+import com.ecommerce.ecommerce.model.exception.InvalidEmailException;
 import com.ecommerce.ecommerce.model.exception.ResourceNotFoundException;
 import com.ecommerce.ecommerce.repository.ClienteRepository;
 import com.ecommerce.ecommerce.shared.ClienteDTO;
+import com.ecommerce.ecommerce.util.CpfValidator;
+import com.ecommerce.ecommerce.util.EmailValidation;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +45,19 @@ public class ClienteService {
     }
 
     public ClienteDTO adicionar(ClienteDTO clienteDTO){
+
         clienteDTO.setId(null);
+
+        EmailValidation emailValidation = new EmailValidation();
+        CpfValidator cpfValidator = new CpfValidator();
+
+        if(!emailValidation.isValidEmailAddress(clienteDTO.getEmail())){
+            throw new InvalidEmailException("O Email '" + clienteDTO.getEmail() + "' não é um email válido. Tente novamente.");
+        }
+
+        if(!cpfValidator.isCPF(clienteDTO.getCpf())){
+            throw new InvalidCpfException("O CPF '" + clienteDTO.getCpf() + "' não é um cpf válido. Tente novamente.");
+        }
 
         ModelMapper mapper = new ModelMapper();
 
@@ -65,7 +81,20 @@ public class ClienteService {
     }
 
     public ClienteDTO atualizar(Integer id, ClienteDTO clienteDTO){
+
         clienteDTO.setId(id);
+
+        EmailValidation emailValidation = new EmailValidation();
+        CpfValidator cpfValidator = new CpfValidator();
+
+        if(!emailValidation.isValidEmailAddress(clienteDTO.getEmail())){
+            throw new InvalidEmailException("O Email '" + clienteDTO.getEmail() + "' não é um email válido. Tente novamente.");
+        }
+
+        if(!cpfValidator.isCPF(clienteDTO.getCpf())){
+            throw new InvalidCpfException("O CPF '" + clienteDTO.getCpf() + "' não é um cpf válido. Tente novamente.");
+        }
+
 
         ModelMapper mapper = new ModelMapper();
 
