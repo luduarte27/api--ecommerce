@@ -4,7 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class PedidoItem {
@@ -12,15 +13,21 @@ public class PedidoItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    
+  	private Integer preco_de_venda;
 
     private Integer quantidade;
-
-    @OneToOne
+    
+    private Integer subtotal;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_pedido")
     private Pedido pedido;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "id_produto")
     private Produto produto;
-
+    
     public Integer getId() {
         return id;
     }
@@ -28,6 +35,14 @@ public class PedidoItem {
     public void setId(Integer id) {
         this.id = id;
     }
+    
+    public Integer getPreco_de_venda() {
+  		return preco_de_venda;
+  	}
+
+  	public void setPreco_de_venda(Integer preco_de_venda) {
+  		this.preco_de_venda = preco_de_venda;
+  	}
 
     public Integer getQuantidade() {
         return quantidade;
@@ -36,6 +51,14 @@ public class PedidoItem {
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
+    
+    public Integer getSubtotal() {
+		return subtotal;
+	}
+
+	public void setSubtotal(Integer subtotal) {
+		this.subtotal = subtotal;
+	}
 
     public Pedido getPedido() {
         return pedido;
