@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -77,6 +78,31 @@ public class ClienteController {
         clienteDTO = clienteService.adicionar(clienteDTO);
 
         return new ResponseEntity<>(mapper.map(clienteDTO, ClienteResponse.class), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteResponse> atualizar(@RequestBody ClienteRequest clienteReq, @PathVariable Integer id){
+        ModelMapper mapper = new ModelMapper();
+
+        Endereco endereco = this.viaCep.consultarCep(clienteReq.getCep());
+
+        endereco.setComplemento(clienteReq.getComplemento());
+        endereco.setNumero(clienteReq.getNumero());
+
+        ClienteDTO clienteDTO = new ClienteDTO();
+
+        clienteDTO.setNome(clienteReq.getNome());
+        clienteDTO.setCpf(clienteReq.getCpf());
+        clienteDTO.setEmail(clienteReq.getEmail());
+        clienteDTO.setDataDeNascimento(clienteReq.getDataDeNascimento());
+        clienteDTO.setEndereco(endereco);
+
+        clienteDTO = clienteService.atualizar(id, clienteDTO);
+
+        return new ResponseEntity<>(
+            mapper.map(clienteDTO, ClienteResponse.class),
+            HttpStatus.OK
+        );
     }
 
     @DeleteMapping
