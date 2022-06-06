@@ -105,7 +105,7 @@ public class ClienteController {
         );
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deletar(@PathVariable Integer id){
         clienteService.deletar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
