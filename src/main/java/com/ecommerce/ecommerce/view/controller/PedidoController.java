@@ -45,12 +45,12 @@ public class PedidoController {
 	@PutMapping("/atualizar/{idPedido}")
 	public ResponseEntity<Void> atualizar(@PathVariable Integer idPedido ,@RequestBody PedidoDTO pedidoDto){
 		pedidoService.atualizar(idPedido,pedidoDto);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	@DeleteMapping("/{idPedido}")
 	public ResponseEntity<Void> deletar(@PathVariable Integer idPedido){
 		pedidoService.deletar(idPedido);
-		return new ResponseEntity<>(HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/relatorio")
