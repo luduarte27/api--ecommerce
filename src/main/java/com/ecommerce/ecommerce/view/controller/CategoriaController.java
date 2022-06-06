@@ -42,12 +42,12 @@ public class CategoriaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<CategoriaResponse>> obterPorId(@PathVariable Integer id){
+    public ResponseEntity<CategoriaResponse> obterPorId(@PathVariable Integer id){
         Optional<CategoriaDTO> dto =  categoriaService.obterPorId(id);
 
         CategoriaResponse categoria = new ModelMapper().map(dto.get(), CategoriaResponse.class);
         
-        return new ResponseEntity<>(Optional.of(categoria), HttpStatus.OK);
+        return new ResponseEntity<>(categoria, HttpStatus.OK);
 
     }
 

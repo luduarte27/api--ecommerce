@@ -46,12 +46,12 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<ClienteResponse>> obterPorId(@PathVariable Integer id){
+    public ResponseEntity<ClienteResponse> obterPorId(@PathVariable Integer id){
         Optional<ClienteDTO> dto =  clienteService.obterPorId(id);
 
         ClienteResponse cliente = new ModelMapper().map(dto.get(), ClienteResponse.class);
         
-        return new ResponseEntity<>(Optional.of(cliente), HttpStatus.OK);
+        return new ResponseEntity<>(cliente, HttpStatus.OK);
 
     }
 
@@ -105,7 +105,7 @@ public class ClienteController {
         );
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     public ResponseEntity<?> deletar(@PathVariable Integer id){
         clienteService.deletar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
