@@ -33,6 +33,8 @@ public class PedidoItemService {
 		pedidoItemDTO.setIdPedido(pedidoItem.getPedido().getId());
 		pedidoItemDTO.setIdProduto(pedidoItem.getProduto().getId());
 		pedidoItemDTO.setQuantidade(pedidoItem.getQuantidade());
+		pedidoItemDTO.setPreco_de_venda(pedidoItem.getPreco_de_venda());
+		pedidoItemDTO.setSubtotal(pedidoItem.getSubtotal());
 
 		return pedidoItemDTO;
 	}
@@ -42,6 +44,8 @@ public class PedidoItemService {
 		pedidoItem.setPedido(pedidoRepository.findById(pedidoItemDTO.getIdPedido()).get());
 		pedidoItem.setProduto(produtoRepository.findById(pedidoItemDTO.getIdProduto()).get());
 		pedidoItem.setQuantidade(pedidoItemDTO.getQuantidade());
+		pedidoItem.setPreco_de_venda(pedidoItemDTO.getPreco_de_venda());
+		pedidoItem.setSubtotal(pedidoItemDTO.getSubtotal());
 
 		return pedidoItem;
 	}
