@@ -66,7 +66,7 @@ public class ClienteService {
             throw new InvalidCpfException("O CPF '" + clienteDTO.getCpf() + "' não é um cpf válido. Tente novamente.");
         }
 
-         ArrayList<String> emails = new ArrayList<String>();
+        /* ArrayList<String> emails = new ArrayList<String>();
          emails.add(clienteDTO.getEmail());
 
          try {
@@ -74,7 +74,7 @@ public class ClienteService {
              emails));
          } catch (MessagingException e) {
              e.printStackTrace();
-         }
+         } */
 
         ModelMapper mapper = new ModelMapper();
 
