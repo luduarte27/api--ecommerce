@@ -6,7 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Produto {
@@ -19,8 +20,10 @@ public class Produto {
 
     private String descricao;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "id_categoria")
     private Categoria categoria;
+    
 
     private Date validade;
 
