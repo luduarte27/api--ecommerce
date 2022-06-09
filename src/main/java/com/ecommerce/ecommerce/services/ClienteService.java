@@ -1,10 +1,14 @@
 package com.ecommerce.ecommerce.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.mail.MessagingException;
+
 import com.ecommerce.ecommerce.model.Cliente;
+import com.ecommerce.ecommerce.model.MensagemEmail;
 import com.ecommerce.ecommerce.model.exception.InvalidCpfException;
 import com.ecommerce.ecommerce.model.exception.InvalidEmailException;
 import com.ecommerce.ecommerce.model.exception.ResourceNotFoundException;
@@ -22,6 +26,9 @@ public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     public List<ClienteDTO> obterTodos(){
         List<Cliente> clientes = clienteRepository.findAll();
@@ -58,6 +65,16 @@ public class ClienteService {
         if(!cpfValidator.isCPF(clienteDTO.getCpf())){
             throw new InvalidCpfException("O CPF '" + clienteDTO.getCpf() + "' não é um cpf válido. Tente novamente.");
         }
+
+        // ArrayList<String> emails = new ArrayList<String>();
+        // emails.add(clienteDTO.getEmail());
+
+        // try {
+        //     emailService.enviar(new MensagemEmail("teste", "<h1>Agora Vai</h1>", "lucianaduartefotografia@gmail.com", 
+        //     emails));
+        // } catch (MessagingException e) {
+        //     e.printStackTrace();
+        // }
 
         ModelMapper mapper = new ModelMapper();
 
