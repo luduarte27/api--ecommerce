@@ -8,6 +8,7 @@ import com.ecommerce.ecommerce.model.Endereco;
 import com.ecommerce.ecommerce.services.ClienteService;
 import com.ecommerce.ecommerce.shared.ClienteDTO;
 import com.ecommerce.ecommerce.util.ViaCepWs;
+import com.ecommerce.ecommerce.view.model.cliente.ClienteLogin;
 import com.ecommerce.ecommerce.view.model.cliente.ClienteRequest;
 import com.ecommerce.ecommerce.view.model.cliente.ClienteResponse;
 
@@ -55,6 +56,15 @@ public class ClienteController {
 
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<ClienteResponse> logar(@RequestBody ClienteLogin clienteLog) {
+        ClienteDTO clienteDTO = clienteService.login(clienteLog.getEmail(), clienteLog.getSenha());
+
+        ClienteResponse cliente = new ModelMapper().map(clienteDTO, ClienteResponse.class);
+
+        return new ResponseEntity<>(cliente, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<ClienteResponse> adicionar(@RequestBody ClienteRequest clienteReq){
         
@@ -72,6 +82,7 @@ public class ClienteController {
         clienteDTO.setEmail(clienteReq.getEmail());
         clienteDTO.setDataDeNascimento(clienteReq.getDataDeNascimento());
         clienteDTO.setEndereco(endereco);
+        clienteDTO.setSenha(clienteReq.getSenha());
 
 
 

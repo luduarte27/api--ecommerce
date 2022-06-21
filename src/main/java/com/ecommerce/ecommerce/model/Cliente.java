@@ -24,6 +24,16 @@ public class Cliente {
 
     private Date dataDeNascimento;
 
+    private String senha;
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     @OneToOne(cascade=CascadeType.PERSIST)
     private Endereco endereco;
 

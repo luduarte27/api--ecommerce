@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.services;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -66,8 +67,14 @@ public class ClienteService {
             throw new InvalidCpfException("O CPF '" + clienteDTO.getCpf() + "' não é um cpf válido. Tente novamente.");
         }
 
-        // ArrayList<String> emails = new ArrayList<String>();
-        // emails.add(clienteDTO.getEmail());
+        Cliente clienteEmail = clienteRepository.findByEmail(clienteDTO.getEmail());
+
+        if(clienteEmail != null){
+            throw new InvalidEmailException("O Email '" + clienteDTO.getEmail() + "' já foi cadastrado.");
+        }
+
+        ArrayList<String> emails = new ArrayList<String>();
+        emails.add(clienteDTO.getEmail());
 
         // try {
         //     emailService.enviar(new MensagemEmail("teste", "<h1>Agora Vai</h1>", "lucianaduartefotografia@gmail.com", 
@@ -85,6 +92,32 @@ public class ClienteService {
         clienteDTO.setId(cliente.getId());
 
         return clienteDTO;
+    }
+
+    public ClienteDTO login(String email, String senha){
+        
+        EmailValidation emailValidation = new EmailValidation();
+
+        if(!emailValidation.isValidEmailAddress(email)){
+            throw new InvalidEmailException("O Email '" + email + "' não é um email válido. Tente novamente.");
+        }
+
+        Cliente clienteEmail = clienteRepository.findByEmail(email);
+
+        if(clienteEmail != null) {
+
+            if(!clienteEmail.getSenha().equals(senha)) {
+                throw new InputMismatchException("Senha incorreta");
+            }
+
+            ModelMapper mapper = new ModelMapper();
+
+            ClienteDTO clienteDTO = mapper.map(clienteEmail, ClienteDTO.class);
+
+            return clienteDTO;
+        } else {
+            throw new InvalidEmailException("O Email '" + email + "' não foi cadastrado.");
+        }
     }
 
     public void deletar(Integer id){

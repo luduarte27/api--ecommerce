@@ -18,6 +18,16 @@ public class ClienteResponse {
 
     private Endereco endereco;
 
+    private String senha;
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     public Integer getId() {
         return id;
     }

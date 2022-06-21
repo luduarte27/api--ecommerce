@@ -15,7 +15,19 @@ public class ProdutoResponse {
 
     private Date validade;
 
+    private String imagem;
+
     private Double valorUnitario;
+
+    
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
 
     public Integer getId() {
         return id;

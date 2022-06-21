@@ -16,7 +16,17 @@ public class ClienteDTO {
 
     private Date dataDeNascimento;
 
+    private String senha;
+
     
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     private Endereco endereco;
 
     public Integer getId() {
