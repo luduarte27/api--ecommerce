@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 public class PedidoItemDTO implements Serializable {
 	
-    private Integer idPedidoItem;
+	private static final long serialVersionUID = 1L;
+	
+	private Integer idPedidoItem;
     private Integer quantidade;
     private Integer idPedido;
     private Integer idProduto;
