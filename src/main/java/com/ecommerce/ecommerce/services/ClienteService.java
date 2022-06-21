@@ -73,15 +73,15 @@ public class ClienteService {
             throw new InvalidEmailException("O Email '" + clienteDTO.getEmail() + "' já foi cadastrado.");
         }
 
-        ArrayList<String> emails = new ArrayList<String>();
-        emails.add(clienteDTO.getEmail());
+        // ArrayList<String> emails = new ArrayList<String>();
+        // emails.add(clienteDTO.getEmail());
 
-         try {
-             emailService.enviar(new MensagemEmail("teste", "<h1>Agora Vai</h1>", "lucianaduartefotografia@gmail.com", 
-             emails));
-         } catch (MessagingException e) {
-             e.printStackTrace();
-         } */
+        //  try {
+        //      emailService.enviar(new MensagemEmail("teste", "<h1>Agora Vai</h1>", "lucianaduartefotografia@gmail.com", 
+        //      emails));
+        //  } catch (MessagingException e) {
+        //      e.printStackTrace();
+        //  } */
 
         ModelMapper mapper = new ModelMapper();
 
